@@ -48,8 +48,7 @@ npm install
 PORT=5000
 MONGO_URI=mongodb+srv://<your-connection-string>
 OPENWEATHER_API_KEY=<your-openweather-api-key>
-# Optional if adding YouTube
-YOUTUBE_API_KEY=<your-youtube-api-key>
+
 ```
 
 #### Run Backend Server:
