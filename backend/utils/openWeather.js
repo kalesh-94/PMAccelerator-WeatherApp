@@ -1,4 +1,4 @@
-// backend/utils/openWeather.js
+
 const axios = require('axios');
 
 const OPENWEATHER_KEY = process.env.OPENWEATHER_API_KEY;
@@ -8,36 +8,36 @@ if (!OPENWEATHER_KEY) {
 
 const OW_BASE = 'https://api.openweathermap.org';
 
-// parse "lat,lon" strings
+
 function parseLatLon(input) {
   const m = input.trim().match(/^(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)$/);
   if (!m) return null;
   return { lat: parseFloat(m[1]), lon: parseFloat(m[3]) };
 }
 
-// determine if input looks like a zip/postal code (simple heuristic: all digits, 3-10 length)
+
 function looksLikeZip(input) {
   return /^\d{3,10}$/.test(input.trim());
 }
 
-// use geocoding to resolve city/place names (limit top 3)
+
 async function geocode(query) {
   if (!OPENWEATHER_KEY) throw new Error('OpenWeather key missing');
   const url = `${OW_BASE}/geo/1.0/direct`;
   const res = await axios.get(url, {
     params: { q: query, limit: 5, appid: OPENWEATHER_KEY }
   });
-  return res.data; // array of matches [{name, lat, lon, country, state}, ...]
+  return res.data; // array of matches 
 }
 
-// resolve zip via OpenWeather zip geocoding (works for many countries if appended)
+
 async function geocodeZip(zip) {
   if (!OPENWEATHER_KEY) throw new Error('OpenWeather key missing');
   // Try with and without country code; prefer calling weather by zip later if needed.
   try {
     const url = `${OW_BASE}/geo/1.0/zip`;
     const res = await axios.get(url, { params: { zip, appid: OPENWEATHER_KEY } });
-    return [res.data]; // returns single object {zip, name, lat, lon}
+    return [res.data]; 
   } catch (err) {
     return []; // fallback empty
   }
@@ -60,7 +60,7 @@ async function fetchForecastByCoords(lat, lon) {
   return res.data;
 }
 
-// Normalize forecast to daily: produce up to 5 days (date, min, max, icon, summary)
+
 function normalizeForecast(forecastData) {
   if (!forecastData || !forecastData.list) return [];
   const byDay = {};
@@ -75,7 +75,7 @@ function normalizeForecast(forecastData) {
     if (desc) byDay[date].summaries[desc] = (byDay[date].summaries[desc] || 0) + 1;
   }
 
-  // pick days in ascending date order, map to array
+  
   const dates = Object.keys(byDay).sort();
   const results = dates.slice(0, 5).map(date => {
     const entry = byDay[date];
@@ -89,7 +89,7 @@ function normalizeForecast(forecastData) {
   return results;
 }
 
-// main: resolve location from various input forms and fetch weather
+
 async function getWeatherForInput(input) {
   // input may be: "lat,lon" OR numeric zip OR place name
   const latlon = parseLatLon(input);
@@ -121,7 +121,7 @@ async function getWeatherForInput(input) {
         forecast: normalizeForecast(forecast)
       };
     }
-    // fallback: query by zip via weather endpoint (openweather supports zip param with country code optional)
+    
     try {
       const url = `${OW_BASE}/data/2.5/weather`;
       const res = await axios.get(url, { params: { zip: trimmed, units: 'metric', appid: OPENWEATHER_KEY } });
@@ -133,18 +133,18 @@ async function getWeatherForInput(input) {
         forecast: normalizeForecast(forecast)
       };
     } catch (err) {
-      // continue to geocoding below
+      
     }
   }
 
-  // otherwise treat as place name -> geocode
+  
   const candidates = await geocode(trimmed);
   if (!candidates || candidates.length === 0) {
     const err = new Error('Location not found');
     err.code = 'LOCATION_NOT_FOUND';
     throw err;
   }
-  // pick first candidate as default
+  
   const cand = candidates[0];
   const lat = cand.lat;
   const lon = cand.lon;
@@ -155,7 +155,7 @@ async function getWeatherForInput(input) {
     location: { name, lat, lon },
     current,
     forecast: normalizeForecast(forecast),
-    candidates // include candidates so frontend can show suggestions if wanted
+    candidates 
   };
 }
 

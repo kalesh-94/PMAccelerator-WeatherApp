@@ -1,4 +1,4 @@
-// backend/server.js
+
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
@@ -14,13 +14,13 @@ const MONGO_URI = process.env.MONGO_URI;
 
 const app = express();
 
-// ✅ Connect to MongoDB
+// Connect to MongoDB
 connectDB(MONGO_URI).catch((err) => {
-  console.error("❌ MongoDB connection failed:", err);
+  console.error(" MongoDB connection failed:", err);
   process.exit(1);
 });
 
-// ✅ Middleware
+//  Middleware
 app.use(express.json({ limit: "1mb" }));
 app.use(morgan("dev"));
 app.use(
@@ -30,7 +30,7 @@ app.use(
   })
 );
 
-// ✅ Routes
+// Routes
 app.get("/", (req, res) =>
   res.send({ ok: true, message: "🌦️ Weather API backend running 🚀" })
 );
@@ -39,7 +39,7 @@ app.get("/", (req, res) =>
 app.use("/api/weather", weatherRoutes);
 app.use("/api/requests", requestRoutes);
 
-// ✅ Save weather data to MongoDB
+// Save weather data to MongoDB
 app.post("/api/save", async (req, res) => {
   try {
     const data = req.body;
@@ -64,23 +64,23 @@ app.post("/api/save", async (req, res) => {
 
     res.json({
       success: true,
-      message: "✅ Weather data saved successfully!",
+      message: "Weather data saved successfully!",
       record: saved,
     });
   } catch (err) {
-    console.error("❌ Error saving weather:", err);
+    console.error(" Error saving weather:", err);
     res
       .status(500)
       .json({ success: false, message: "Failed to save weather data" });
   }
 });
 
-// ✅ Global Error Handler
+//  Global Error Handler
 app.use((err, req, res, next) => {
-  console.error("🔥 Unhandled error:", err);
+  console.error("Unhandled error:", err);
   res.status(500).json({ success: false, error: "Internal server error" });
 });
 
 app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });

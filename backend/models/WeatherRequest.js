@@ -1,9 +1,9 @@
-// backend/models/WeatherRequest.js
+
 const mongoose = require('mongoose');
 
 const WeatherRequestSchema = new mongoose.Schema({
   query: { type: String, required: true },         // user input
-  locationName: { type: String, required: true },  // canonical name from geocoding
+  locationName: { type: String, required: true },  
   lat: { type: Number, required: true },
   lon: { type: Number, required: true },
   start_date: { type: Date }, // optional

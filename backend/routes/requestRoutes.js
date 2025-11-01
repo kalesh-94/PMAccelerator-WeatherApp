@@ -1,9 +1,9 @@
-// backend/routes/requestRoutes.js
+
 const express = require("express");
 const router = express.Router();
 const SavedWeather = require("../models/SavedWeather");
 
-// 🟢 GET all saved weather requests
+
 router.get("/", async (req, res) => {
   try {
     const records = await SavedWeather.find().sort({ createdAt: -1 });
@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// 🟡 UPDATE a saved record (edit temperature)
+// UPDATe
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -37,7 +37,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// 🔴 DELETE a saved record
+//  DELETE a saved record
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;

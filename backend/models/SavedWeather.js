@@ -1,4 +1,4 @@
-// backend/models/SavedWeather.js
+
 const mongoose = require("mongoose");
 
 const SavedWeatherSchema = new mongoose.Schema(
