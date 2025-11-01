@@ -83,7 +83,7 @@ Frontend runs on:
 | `GET` | `/api/requests` | Fetch all saved weather records |
 | `PUT` | `/api/requests/:id` | Update temperature/details |
 | `DELETE` | `/api/requests/:id` | Delete saved record |
-| *(Optional)* `GET` | `/api/youtube/:city` | Fetch YouTube videos of city |
+
 
 ---
 
