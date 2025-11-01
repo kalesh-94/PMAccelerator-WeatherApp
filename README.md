@@ -64,7 +64,7 @@ Server runs on:
 
 ### 3️⃣ Frontend Setup
 ```bash
-cd frontend/weatherapp
+cd .\frontend\weatherapp\
 npm install
 npm run dev
 ```
