@@ -28,7 +28,7 @@ app.use(
       "https://weather-app-ecru-phi-57.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"],
+    allowedHeaders: ["Content-Type", "Authorization", "Accept"],
   })
 );
 

@@ -9,10 +9,10 @@ function Searchbar() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  // ✅ Backend URL from .env
+  // Backend URL from .env
   const API = import.meta.env.VITE_API_URL;
 
-  // ✅ Fetch weather from backend
+  // Fetch weather from backend
   const fetchWeather = async () => {
     if (!query) return;
     try {
@@ -38,12 +38,12 @@ function Searchbar() {
     }
   };
 
-  // ✅ Save fetched weather data to backend
+  //  Save fetched weather data to backend
   const saveWeather = async () => {
     if (!weather) return alert("Please fetch weather first!");
 
     try {
-      const res = await fetch(`${API}/api/save`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/save`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(weather),
