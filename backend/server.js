@@ -21,14 +21,17 @@ connectDB(MONGO_URI).catch((err) => {
 });
 
 //  Middleware
-app.use(express.json({ limit: "1mb" }));
-app.use(morgan("dev"));
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://weather-app-ecru-phi-57.vercel.app",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"],
   })
 );
+
 
 // Routes
 app.get("/", (req, res) =>
