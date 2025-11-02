@@ -35,7 +35,7 @@ app.use(
 
 // Routes
 app.get("/", (req, res) =>
-  res.send({ ok: true, message: "🌦️ Weather API backend running 🚀" })
+  res.send({ ok: true, message: " Weather API backend running " })
 );
 
 
