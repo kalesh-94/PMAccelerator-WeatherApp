@@ -40,7 +40,7 @@ app.use(morgan("dev"));
 
 //  Test Route
 app.get("/", (req, res) => {
-  res.json({ success: true, message: "Weather API backend running 🚀" });
+  res.json({ success: true, message: "Weather API backend running " });
 });
 
 //  Main Routes
