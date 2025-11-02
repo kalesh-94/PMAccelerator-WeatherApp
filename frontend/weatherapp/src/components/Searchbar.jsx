@@ -9,12 +9,15 @@ function Searchbar() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  // Fetch weather from backend - YOUR EXISTING LOGIC
+  // ✅ Backend URL from .env
+  const API = import.meta.env.VITE_API_URL;
+
+  // ✅ Fetch weather from backend
   const fetchWeather = async () => {
     if (!query) return;
     try {
       const res = await fetch(
-        `http://localhost:5000/api/weather?query=${encodeURIComponent(query)}`
+        `${API}/api/weather?query=${encodeURIComponent(query)}`
       );
       const data = await res.json();
       console.log("API Response:", data);
@@ -29,18 +32,18 @@ function Searchbar() {
       setError("");
       setMessage("");
     } catch (err) {
-      console.error(" Fetch error:", err);
+      console.error("Fetch error:", err);
       setError("Could not fetch weather data.");
       setWeather(null);
     }
   };
 
-  // Save fetched weather data to backend - YOUR EXISTING LOGIC
+  // ✅ Save fetched weather data to backend
   const saveWeather = async () => {
     if (!weather) return alert("Please fetch weather first!");
 
     try {
-      const res = await fetch("http://localhost:5000/api/save", {
+      const res = await fetch(`${API}/api/save`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(weather),
@@ -59,6 +62,7 @@ function Searchbar() {
       setMessage("Unable to save data (server error).");
     }
   };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-8 px-4">
